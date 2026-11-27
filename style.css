@@ -1,0 +1,105 @@
+:root {
+    --bg-primary: #07080b; --bg-secondary: #0f1218;
+    --bg-card: rgba(17, 20, 28, 0.85); --bg-card-hover: rgba(24, 29, 41, 0.95);
+    --text-primary: #e8ecf4; --text-secondary: #9aa5b8; --text-muted: #647084;
+    --accent-primary: #dc2626; --accent-secondary: #94a3b8;
+    --accent-glow: rgba(220, 38, 38, 0.35);
+    --border-color: rgba(148, 163, 184, 0.22); --border-highlight: rgba(220, 38, 38, 0.65);
+    --nav-bg: rgba(7, 8, 11, 0.82);
+    --hero-radial: radial-gradient(circle at 50% 35%, rgba(127, 29, 29, 0.28) 0%, rgba(15, 23, 42, 0.4) 45%, rgba(7, 8, 11, 0.98) 85%);
+    --card-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.85), 0 0 20px rgba(220, 38, 38, 0.12);
+    --modal-bg: #0c0e14; --badge-bg: rgba(220, 38, 38, 0.15); --badge-text: #fca5a5;
+    --scroll-track: #07080b; --scroll-thumb: #334155;
+}
+[data-theme="light"] {
+    --bg-primary: #faf6ee; --bg-secondary: #f3ead8;
+    --bg-card: rgba(255, 252, 245, 0.9); --bg-card-hover: rgba(255, 255, 255, 0.98);
+    --text-primary: #1f1912; --text-secondary: #574938; --text-muted: #8a7860;
+    --accent-primary: #b45309; --accent-secondary: #991b1b;
+    --accent-glow: rgba(217, 119, 6, 0.32);
+    --border-color: rgba(180, 83, 9, 0.28); --border-highlight: rgba(217, 119, 6, 0.75);
+    --nav-bg: rgba(250, 246, 238, 0.88);
+    --hero-radial: radial-gradient(circle at 50% 35%, rgba(251, 191, 36, 0.32) 0%, rgba(243, 234, 216, 0.5) 45%, rgba(250, 246, 238, 0.98) 85%);
+    --card-shadow: 0 15px 35px -5px rgba(120, 80, 20, 0.14), 0 0 22px rgba(245, 158, 11, 0.15);
+    --modal-bg: #fffdf8; --badge-bg: rgba(217, 119, 6, 0.14); --badge-text: #92400e;
+    --scroll-track: #f3ead8; --scroll-thumb: #d97706;
+}
+body {
+    background-color: var(--bg-primary); color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 0.65s ease, color 0.65s ease; overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--scroll-track); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 999px; }
+
+@keyframes floatSlow { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-12px) rotate(0.8deg); } }
+@keyframes pulseAura {
+    0%,100% { box-shadow: 0 0 25px var(--accent-glow), inset 0 0 15px var(--accent-glow); transform: scale(1); }
+    50% { box-shadow: 0 0 48px var(--accent-glow), inset 0 0 25px var(--accent-glow); transform: scale(1.015); }
+}
+@keyframes spinSlow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes spinReverseSlow { from { transform: rotate(360deg); } to { transform: rotate(0); } }
+@keyframes shimmerSweep { 0% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+.animate-float { animation: floatSlow 5.5s ease-in-out infinite; }
+.animate-aura { animation: pulseAura 4s ease-in-out infinite; }
+.animate-ring-cw { animation: spinSlow 28s linear infinite; }
+.animate-ring-ccw { animation: spinReverseSlow 22s linear infinite; }
+
+.royal-card {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, background-color .6s ease;
+    position: relative; overflow: hidden;
+}
+.royal-card:hover { border-color: var(--border-highlight); background: var(--bg-card-hover); transform: translateY(-5px); }
+.royal-card::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 45%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+    transform: translateX(-150%) skewX(-20deg); pointer-events: none;
+}
+.royal-card:hover::before { animation: shimmerSweep .95s ease-out; }
+.corner-ornament { position: absolute; width: 14px; height: 14px; border-color: var(--accent-primary); opacity: .7; pointer-events: none; transition: all .3s ease; }
+.royal-card:hover .corner-ornament { width: 20px; height: 20px; opacity: 1; }
+
+.reveal-up { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal-up.visible { opacity: 1; transform: translateY(0); }
+
+.epic-gradient-text {
+    background: linear-gradient(135deg, var(--text-primary) 15%, var(--accent-primary) 55%, var(--accent-secondary) 95%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.royal-divider { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.royal-divider::before, .royal-divider::after {
+    content: ""; height: 1px; flex: 1; max-width: 160px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+}
+.btn-epic {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: #fff; transition: all .3s ease; box-shadow: 0 4px 18px var(--accent-glow);
+}
+.btn-epic:hover { filter: brightness(1.12); transform: translateY(-2px); }
+.btn-outline-epic { border: 1px solid var(--border-highlight); color: var(--text-primary); background: transparent; transition: all .3s ease; }
+.btn-outline-epic:hover { background: var(--badge-bg); transform: translateY(-2px); }
+
+/* ===== TOMBOL MUSIK ===== */
+#musicBtn {
+    position: fixed; right: 18px; bottom: 18px; z-index: 45;
+    width: 54px; height: 54px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: 1px solid var(--border-highlight);
+    background: var(--bg-card); color: var(--accent-primary);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 22px var(--accent-glow);
+    transition: transform .3s ease, background-color .6s ease;
+}
+#musicBtn:hover { transform: scale(1.1); }
+#musicBtn.playing { animation: pulseAura 3s ease-in-out infinite; }
+#musicHint {
+    position: fixed; right: 82px; bottom: 30px; z-index: 45;
+    padding: 6px 12px; border-radius: 10px; font-size: 11px;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    color: var(--text-secondary); pointer-events: none;
+    opacity: 0; transition: opacity .4s ease;
+}
+#musicHint.show { opacity: 1; }

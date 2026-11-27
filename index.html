@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Portofolio izzy | Ksatria Cahaya & Kegelapan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: {
+                cinzel: ['"Cinzel"', 'serif'],
+                cinzelDeco: ['"Cinzel Decorative"', 'serif'],
+                sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            } } }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased selection:bg-amber-500/30">
+
+    <audio id="bgMusic" src="audio/golden-brown.mp3" loop preload="auto"></audio>
+    <button id="musicBtn" onclick="toggleMusic()" title="Putar / jeda musik (tombol M)" aria-label="Putar atau jeda musik">
+        <span id="musicIconWrap" class="flex items-center"></span>
+    </button>
+    <div id="musicHint">Klik untuk memutar musik ♪ (tekan M)</div>
+
+    <canvas id="dualityCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+    <div class="fixed inset-0 pointer-events-none z-0" style="background: var(--hero-radial);"></div>
+
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-40 border-b backdrop-blur-md" style="background-color: var(--nav-bg); border-color: var(--border-color);">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+            <a href="#beranda" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center border animate-aura" style="border-color: var(--accent-primary); background: var(--bg-secondary);">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--accent-primary);">
+                        <path d="M12 2L15 6L19 4L17 9H7L5 4L9 6L12 2Z" />
+                        <path d="M12 9V21M9 13H15M10 21H14" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-cinzel font-bold text-sm sm:text-base tracking-wider block leading-tight" id="navBrandName"></span>
+                    <span class="text-[11px] tracking-widest uppercase block" style="color: var(--text-muted);" id="realmSubtitle"></span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium" style="color: var(--text-secondary);">
+                <a href="#beranda" class="opacity-85 hover:opacity-100">Beranda</a>
+                <a href="#profil" class="opacity-85 hover:opacity-100">Data Pribadi</a>
+                <a href="#pendidikan" class="opacity-85 hover:opacity-100">SMA & Kuliah</a>
+                <a href="#galeri" class="opacity-85 hover:opacity-100">Galeri</a>
+                <a href="#materi" class="opacity-85 hover:opacity-100">4 Kitab 
+                    
+                </a>
+            </nav>
+
+            <button onclick="toggleDualityTheme()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold cursor-pointer hover:scale-[1.03] transition" style="border-color: var(--border-highlight); background: var(--bg-secondary); color: var(--text-primary);">
+                <span id="themeIconWrap" class="flex items-center"></span>
+                <span id="themeLabelText" class="font-cinzel tracking-wide"></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+        <!-- HERO -->
+        <section id="beranda" class="min-h-[88vh] flex items-center pt-10 pb-16 px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+                <div class="lg:col-span-7 text-center lg:text-left space-y-6 reveal-up">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border text-xs font-semibold tracking-widest uppercase" style="background: var(--badge-bg); border-color: var(--border-highlight); color: var(--badge-text);">
+                        <span class="w-2 h-2 rounded-full animate-ping" style="background-color: var(--accent-primary);"></span>
+                        <span id="heroRealmBadge"></span>
+                    </div>
+                    <h1 class="font-cinzelDeco text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-wide">
+                        <span class="block text-lg sm:text-xl font-cinzel font-semibold tracking-[0.22em] mb-2 uppercase" style="color: var(--text-secondary);">Kisah Sang Ksatria</span>
+                        <span id="heroFullName" class="epic-gradient-text"></span>
+                    </h1>
+                    <p id="heroTagline" class="font-cinzel text-base sm:text-xl font-semibold tracking-wide" style="color: var(--accent-primary);"></p>
+                    <p id="heroBio" class="text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0" style="color: var(--text-secondary);"></p>
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
+                        <a href="#materi" class="btn-epic px-6 py-3.5 rounded-xl font-cinzel font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2.5">
+                            <i data-lucide="scroll-text" class="w-4 h-4"></i> Buka 4 Kitab Materi
+                        </a>
+                        <a href="#galeri" class="btn-outline-epic px-6 py-3.5 rounded-xl font-cinzel font-semibold text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2.5">
+                            <i data-lucide="images" class="w-4 h-4"></i> Galeri Kenangan
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex justify-center reveal-up">
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center animate-float">
+                        <svg class="absolute inset-0 w-full h-full animate-ring-cw opacity-45" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="0.7" stroke-dasharray="6 4" style="color: var(--accent-primary);" />
+                            <circle cx="100" cy="100" r="84" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 6" style="color: var(--accent-secondary);" />
+                        </svg>
+                        <svg class="absolute inset-6 w-[calc(100%-3rem)] h-[calc(100%-3rem)] animate-ring-ccw opacity-35" viewBox="0 0 200 200">
+                            <rect x="36" y="36" width="128" height="128" fill="none" stroke="currentColor" stroke-width="0.8" style="color: var(--accent-primary);" />
+                            <rect x="36" y="36" width="128" height="128" fill="none" stroke="currentColor" stroke-width="0.8" transform="rotate(45 100 100)" style="color: var(--accent-secondary);" />
+                        </svg>
+                        <div class="relative w-52 h-60 sm:w-60 rounded-3xl royal-card animate-aura flex flex-col items-center justify-center p-4 text-center">
+                            <img src="images/joshua-portrait.jpeg" alt="Joshua Izzy di samping skuter klasik" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-slate-950/65"></div>
+                            <div class="relative z-10">
+                                <div id="knightCrestVisual" class="mb-3"></div>
+                                <span id="crestTitle" class="font-cinzel font-bold text-xs sm:text-sm tracking-widest uppercase block" style="color: var(--accent-primary);"></span>
+                                <span id="crestSub" class="text-[11px] mt-1 block" style="color: var(--text-secondary);"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA KSATRIA -->
+        <section id="profil" class="py-16 px-4 sm:px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 reveal-up">
+                    <span class="text-xs font-cinzel font-bold tracking-[0.25em] uppercase block mb-2" style="color: var(--accent-primary);">Identitas Sang Pengembara</span>
+                    <h2 class="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide">Data Ksatria</h2>
+                    <div class="royal-divider mt-3"><i data-lucide="shield" class="w-4 h-4" style="color: var(--accent-primary);"></i></div>
+                </div>
+                <div class="royal-card rounded-2xl p-6 sm:p-10 reveal-up">
+                    <div id="profileGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PENDIDIKAN -->
+        <section id="pendidikan" class="py-16 px-4 sm:px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 reveal-up">
+                    <span class="text-xs font-cinzel font-bold tracking-[0.25em] uppercase block mb-2" style="color: var(--accent-primary);">Dua Pilar Perjalanan Ilmu</span>
+                    <h2 class="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide">Kenangan SMA & Perjalanan Kuliah</h2>
+                    <div class="royal-divider mt-3"><i data-lucide="crown" class="w-4 h-4" style="color: var(--accent-primary);"></i></div>
+                </div>
+                <div id="educationGrid" class="grid grid-cols-1 gap-8"></div>
+            </div>
+        </section>
+
+        <!-- GALERI -->
+        <section id="galeri" class="py-16 px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12 reveal-up">
+                    <span class="text-xs font-cinzel font-bold tracking-[0.25em] uppercase block mb-2" style="color: var(--accent-primary);">Abadi Dalam Ingatan</span>
+                    <h2 class="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide">Galeri Kenangan</h2>
+                    <p class="text-xs sm:text-sm max-w-2xl mx-auto mt-2" style="color: var(--text-secondary);">Klik foto untuk melihat dalam ukuran penuh.</p>
+                    <div class="royal-divider mt-3"><i data-lucide="sparkles" class="w-4 h-4" style="color: var(--accent-primary);"></i></div>
+                </div>
+                <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- MATERI -->
+        <section id="materi" class="py-16 pb-24 px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12 reveal-up">
+                    <span class="text-xs font-cinzel font-bold tracking-[0.25em] uppercase block mb-2" style="color: var(--accent-primary);">Ruang Arsip & Pengetahuan</span>
+                    <h2 class="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide">4 Kitab suci </h2>
+                    <div class="royal-divider mt-3"><i data-lucide="book-open" class="w-4 h-4" style="color: var(--accent-primary);"></i></div>
+                </div>
+                <div id="materialsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-7"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="relative z-10 border-t py-8 px-4 sm:px-6 text-center" style="background: var(--bg-secondary); border-color: var(--border-color);">
+        <div class="flex items-center justify-center gap-2.5">
+            <i data-lucide="swords" class="w-4 h-4" style="color: var(--accent-primary);"></i>
+            <span class="font-cinzel font-bold text-xs sm:text-sm tracking-wider" id="footerOwner"></span>
+        </div>
+    </footer>
+
+    <!-- MODAL BACA MATERI -->
+    <div id="materialModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" onclick="if(event.target===this) closeMaterial()">
+        <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border p-6 sm:p-8 shadow-2xl" style="background: var(--modal-bg); border-color: var(--border-highlight);">
+            <div class="flex items-center justify-between pb-4 mb-5 border-b" style="border-color: var(--border-color);">
+                <h3 id="materialModalHeading" class="font-cinzel text-lg sm:text-xl font-bold"></h3>
+                <button onclick="closeMaterial()" class="p-2 rounded-lg hover:opacity-75 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <span id="readMatCategory" class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: var(--badge-bg); color: var(--badge-text);"></span>
+            <h2 id="readMatTitle" class="font-cinzel text-2xl font-bold mb-4"></h2>
+            <div id="readMatContent" class="p-5 rounded-xl border whitespace-pre-line leading-relaxed text-sm sm:text-base" style="background: var(--bg-secondary); border-color: var(--border-color);"></div>
+            <div class="flex justify-end pt-5">
+                <button onclick="closeMaterial()" class="btn-epic px-5 py-2.5 rounded-xl text-xs font-cinzel font-bold uppercase tracking-wider cursor-pointer">Tutup Kitab</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX FOTO -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md" onclick="if(event.target===this) closeLightbox()">
+        <div class="w-full max-w-3xl rounded-2xl border overflow-hidden shadow-2xl" style="background: var(--modal-bg); border-color: var(--border-highlight);">
+            <div class="relative bg-black/90 flex items-center justify-center max-h-[65vh] overflow-hidden">
+                <img id="lightboxImg" src="" alt="" class="w-full max-h-[65vh] object-contain">
+                <button onclick="closeLightbox()" class="absolute top-3 right-3 p-2.5 rounded-xl bg-black/65 text-white hover:bg-black cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-6 space-y-2">
+                <span id="lightboxMoment" class="text-xs font-medium" style="color: var(--text-muted);"></span>
+                <h3 id="lightboxTitle" class="font-cinzel text-xl sm:text-2xl font-bold"></h3>
+                <p id="lightboxCaption" class="text-sm leading-relaxed" style="color: var(--text-secondary);"></p>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
