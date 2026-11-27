@@ -89,7 +89,7 @@ const PORTFOLIO = {
 `
         },
         {
-            kategori: "Pilar Kegelapan • Sistem Informasi",
+            kategori: "Perjalanan  • Sistem Informasi",
             judul: "Devi Gusmita, S.Kom., M.Kom.",
             ringkasan: "Ringkasan singkat materi Partisi 1.",
             isi:`Sistem Informasi merupakan hubungan antara Teknologi, Manajemen dan Bisnis.
@@ -97,13 +97,13 @@ const PORTFOLIO = {
 .`
         },
         {
-            kategori: "Pilar Cahaya • Public Speaking",
+            kategori: "berbicara dengan masa depan• Public Speaking",
             judul: "Irwansyah",
             ringkasan: "Ringkasan singkat materi Partisi 2 .",
             isi: `Public speaking adalah suatu teknik untuk memengaruhi pendengar didepan khalayak ramai atau didepan umum. Dengan menjaga penampilan yang rapih, tata bahasa yang terstruktur, kontak mata yang dijaga kepada pendengar. Gesture saat berbicara juga sangat penting agar pendengar menjadi nyaman menerima dan percaya atas yang disampaikan oleh pembicara..`
         },
         {
-            kategori: "Pilar Kegelapan • Psikologi",
+            kategori: "pencerahan duniawi • Psikologi",
             judul: "Fitri",
             ringkasan: "Ringkasan singkat materi Partisi 2.",
             isi: `Pentingnya menjaga kesehatan psikologi terutama pada mahasiswa saat masa transisi dari bangku pendidikan tingkat SMA ke Perkuliahan. Karena budaya pembelajarannya sangat berbeda. Seorang mahasiswa sangat mugnkin mengalami stress karena tekanan besar yang didapat ketika perkuliahan.
