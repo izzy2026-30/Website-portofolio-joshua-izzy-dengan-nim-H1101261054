@@ -90,7 +90,7 @@ const PORTFOLIO = {
         },
         {
             kategori: "Pilar Kegelapan • Sistem Informasi",
-            judul: "Devi Gusmitaa",
+            judul: "Devi Gusmita, S.Kom., M.Kom.",
             ringkasan: "Ringkasan singkat materi Partisi 1.",
             isi:`Sistem Informasi merupakan hubungan antara Teknologi, Manajemen dan Bisnis.
                 Etika dalam berkomunikasi, dilingkungan perkuliahan. Dengan memperhatikan sopan santun dalam menyampaikan suatu gagasan, berkomunikasi hanya pada saat jam kerja.
